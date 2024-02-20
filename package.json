@@ -1,0 +1,19 @@
+{
+  "name": "first-discord-bot",
+  "version": "1.0.0",
+  "description": "My first discord bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CatNgo18/first-discord-bot.git"
+  },
+  "author": "Cattien Ngo",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/CatNgo18/first-discord-bot/issues"
+  },
+  "homepage": "https://github.com/CatNgo18/first-discord-bot#readme"
+}
