@@ -45,38 +45,65 @@ client.on('messageCreate', (message) => {
 });
 
 
-// Slash commands
-client.on('interactionCreate', (interaction) => {
-    if (!interaction.isChatInputCommand()) return;
+client.on('interactionCreate', async (interaction) => {
+    if (interaction.isChatInputCommand()) {
+        if (interaction.commandName === 'hey') {
+            interaction.reply('hey!');
+        }
+    
+        if (interaction.commandName === 'add') {
+            const num1 = interaction.options.get('first-number').value;
+            const num2 = interaction.options.get('second-number').value;
+    
+            interaction.reply(`The sum is ${num1+num2}`)
+        }
+    
+        if (interaction.commandName === 'embed') {
+            const embed = new EmbedBuilder()
+                .setTitle("Embed title")
+                .setDescription('This is an embed description')
+                .setColor(`Random`)
+                .addFields({
+                    name: 'Field title',
+                    value: 'Some random value',
+                    inline: true,
+                },
+                {
+                    name: '2nd field title',
+                    value: 'Some random value',
+                    inline: true,
+                });
+    
+            interaction.reply({ embeds: [embed] });
+        }
+    };
 
-    if (interaction.commandName === 'hey') {
-        interaction.reply('hey!');
-    }
+    if (interaction.isButton()) {
+        try {
+            await interaction.deferReply({ ephemeral: true });
 
-    if (interaction.commandName === 'add') {
-        const num1 = interaction.options.get('first-number').value;
-        const num2 = interaction.options.get('second-number').value;
+            const role = interaction.guild.roles.cache.get(interaction.customId);
 
-        interaction.reply(`The sum is ${num1+num2}`)
-    }
+            if (!role) {
+                interaction.editReply({
+                    content: "I couldn't find that role.",
+                });
+                return;
+            }
 
-    if (interaction.commandName === 'embed') {
-        const embed = new EmbedBuilder()
-            .setTitle("Embed title")
-            .setDescription('This is an embed description')
-            .setColor(`Random`)
-            .addFields({
-                name: 'Field title',
-                value: 'Some random value',
-                inline: true,
-            },
-            {
-                name: '2nd field title',
-                value: 'Some random value',
-                inline: true,
-            });
+            const hasRole = interaction.member.roles.cache.has(role.id);
 
-        interaction.reply({ embeds: [embed] });
+            if (hasRole) {
+                await interaction.member.roles.remove(role);
+                await interaction.editReply(`The role ${role} has been removed.`);
+                return;
+            }
+
+            await interaction.member.roles.add(role);
+            await interaction.editReply(`The role ${role} has been added.`);
+        } catch (error) {
+            console.log(error);
+        }
     }
 });
 
