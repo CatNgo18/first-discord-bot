@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/CatNgo18/first-discord-bot#readme",
   "dependencies": {
+    "canvacord": "^6.0.2",
     "discord.js": "^14.14.1",
     "dotenv": "^16.4.5",
     "mongodb": "^6.6.2",
