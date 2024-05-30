@@ -46,6 +46,7 @@ const client = new Client({
     }
 })();
 
+// Change bot status
 // client.on('ready', (c) => {
 //     setInterval(() => {
 //         let random = Math.floor(Math.random() * status.length);
@@ -54,6 +55,7 @@ const client = new Client({
 // });
 
 
+// Send embedded messages
 // client.on('messageCreate', (message) => {
 //     if (message.author.bot) {
 //         return;
